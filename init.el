@@ -18,12 +18,12 @@ values."
    ;; lazy install any layer that support lazy installation even the layers
    ;; listed in `dotspacemacs-configuration-layers'. `nil' disable the lazy
    ;; installation feature and you have to explicitly list a layer in the
-   ;t; variable `dotspacemacs-configuration-layers' to install it.
+                                        ;t; variable `dotspacemacs-configuration-layers' to install it.
    ;; (default 'unused)
-   dotspacemacs-enable-lazy-installation 'unused
+   ;; dotspacemacs-enable-lazy-installation 'unused
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
-    dotspacemacs-ask-for-lazy-installation t
+   dotspacemacs-ask-for-lazy-installation t
    ;; If non-ngil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
@@ -61,9 +61,10 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages'(
-                                    irony  
-                                    company-irony
-                                    cuda-mode
+                                     irony
+                                     simple-httpd
+                                     company-irony
+                                     cuda-mode
                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -316,8 +317,8 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-   (setq tramp-ssh-controlmaster-options
-        "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
+   ;; (setq tramp-ssh-controlmaster-options
+   ;;       "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
   )
 
 (defun dotspacemacs/user-config ()
@@ -334,22 +335,25 @@ you should place your code here."
   ;; (add-to-list 'auto-mode-alist '("\\.cu\\'" . cuda-mode))
   ;; (add-hook 'cuda-mode-hook' smartparens-mode)
   ;; (add-hook 'cuda-mode-hook' company-mode)
-  ;; (push 'cuda-mode irony-supported-major-modes)  
+  ;; (push 'cuda-mode irony-supported-major-modes)
   ;; (add-hook 'cuda-mode-hook' irony-mode)
   ;; (add-hook 'cuda-mode-hook' flyspell-mode)
+  (add-hook 'js2-mode-hook 'skewer-mode)
+  (add-hook 'css-mode-hook 'skewer-css-mode)
+  (add-hook 'html-mode-hook 'skewer-html-mode)
 
   (add-hook 'c++-mode-hook 'company-mode)
-  ;; (add-hook 'c-mode-hook 'company-mode)
+  (add-hook 'c-mode-hook 'company-mode)
   (add-hook 'objc-mode-hook 'company-mode)
   (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'objc-mode-hook 'irony-mode)
-
-  
   (eval-after-load 'company
     '(add-to-list 'company-backends 'company-irony))  ;;https://github.com/Sarcasm/irony-mode/issues/167 to solve install irony-install-server
 
- )
+  (global-set-key (kbd "s-i") 'spacemacs/indent-region-or-buffer)
+  (global-set-key (kbd "s-/") 'spacemacs/comment-or-uncomment-lines)
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
