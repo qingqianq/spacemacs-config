@@ -353,9 +353,13 @@ you should place your code here."
   (add-hook 'js2-mode-hook 'skewer-mode)
   (add-hook 'css-mode-hook 'skewer-css-mode)
   (add-hook 'html-mode-hook 'skewer-html-mode)
+  ;; (add-hook 'web-mode-hook 'skewer-html-mode)
   (spacemacs|use-package-add-hook skewer-mode
     :post-config
     (define-key skewer-mode-map (kbd "s-r") 'run-skewer))
+  (spacemacs|use-package-add-hook web-mode
+    :post-config
+    (define-key web-mode-map (kbd "SPC h h") 'insert-html-macro))
 
   (global-set-key (kbd "s-i") 'spacemacs/indent-region-or-buffer)
   (global-set-key (kbd "s-/") 'spacemacs/comment-or-uncomment-lines)
@@ -377,3 +381,9 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#272822")) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C")))))
+
+;;Function 
+(defun insert-html-macro ()
+  (interactive)
+  (insert "<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<meta charset=\"UTF-8\">\n\t\t<title></title>\n\t</head>\n\t<body>\n\t\t\n\t</body>\n</html>")
+  (spacemacs/indent-region-or-buffer))
